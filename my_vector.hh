@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <cmath>
+#include <iostream>
 
 template <unsigned int DIM>
 class MyVector
@@ -16,6 +16,7 @@ class MyVector
     MyVector operator+(MyVector& other);
     double operator*(MyVector& other);
     std::vector<double>& get_values();
+    void print() const;
 
   private:
     MyVector()

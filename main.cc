@@ -3,13 +3,10 @@
 #include "my_vector.hh"
 
 int main() {
-  std::vector<double> v1 {2.5, 3.3, 43 };
-  std::vector<double> v2 {-1.5, -2.3, -42 };
+  std::vector<double> v1 { 0.5, 2, 0 };
+  std::vector<double> v2 { 2, 0.5, -1 };
   MyVector<3> foo = MyVector<3>(v1);
   MyVector<3> bar = MyVector<3>(v2);
-  MyVector<3> baz = foo + bar;
-  std::cout << "{ ";
-  for (auto i : baz.get_values())
-    std::cout << baz.get_values()[i] << " ";
-  std::cout << " }" << std::endl;
+  (foo + bar).print();
+  std::cout << foo * bar << std::endl;
 }
