@@ -7,7 +7,7 @@ MyVector<M> MyMatrix<M, N>::operator*(MyVector<M>& other) {
   for (size_t i = 0; i < M; ++i) {
     #pragma parallel for reduction(+:ans[i])
     for (size_t j = 0; j < N; ++j)
-      ans[i] += values_[i][j];
+      ans[i] += values_[i][j] * other.get_values()[j];
   }
   #pragma barrier
   return MyVector<M>(ans);
@@ -44,4 +44,5 @@ void MyMatrix<M, N>::print() const {
   }
   for (size_t i = 0; i < 1 + N * (size + 1); ++i)
     std::cout << "-";
+  std::cout << std::endl;
 }
