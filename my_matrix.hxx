@@ -5,11 +5,10 @@ MyVector<M> MyMatrix<M, N>::operator*(MyVector<M>& other) {
   auto ans = std::vector<double>(M, 0);
   #pragma omp parallel for
   for (size_t i = 0; i < M; ++i) {
-    #pragma parallel for reduction(+:ans[i])
+  //  #pragma parallel for reduction(+:ans[i])
     for (size_t j = 0; j < N; ++j)
       ans[i] += values_[i][j] * other.get_values()[j];
   }
-  #pragma barrier
   return MyVector<M>(ans);
 }
 
@@ -26,7 +25,6 @@ size_t MyMatrix<M, N>::max_width() const {
         ans = str.length();
     }
   }
-  #pragma omp barrier
   return ans;
 }
 

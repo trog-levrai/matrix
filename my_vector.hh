@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iostream>
+#include <omp.h>
 
 template <unsigned int DIM>
 class MyVector
