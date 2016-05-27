@@ -1,22 +1,24 @@
 #include <iostream>
+#include <chrono>
 
 #include "my_vector.hh"
 #include "my_matrix.hh"
 
-#define LEN 100000000
+#define LEN (1 << 26)
+
+using namespace std::chrono;
 
 void perf_tests() {
   std::cout << "Performance tests" << std::endl;
-  auto v1 = std::vector<double>();
-  auto v2 = std::vector<double>();
-  for (size_t i = 0; i < LEN; ++i) {
-    v1.push_back(i);
-    v2.push_back(i);
-  }
+  auto v1 = std::vector<double>(LEN);
+  auto v2 = std::vector<double>(LEN);
   MyVector<LEN> foo = MyVector<LEN>(v1);
   MyVector<LEN> bar = MyVector<LEN>(v2);
-  //(foo + bar).print();
+  high_resolution_clock::time_point t1 = high_resolution_clock::now();
   foo + bar;
+  high_resolution_clock::time_point t2 = high_resolution_clock::now();
+  auto duration = duration_cast<microseconds>( t2 - t1 ).count();
+  std::cout << "Test duration: " << duration << " microseconds" << std::endl;
 }
 
 void basic_tests() {
