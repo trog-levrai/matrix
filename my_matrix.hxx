@@ -13,7 +13,6 @@ MyVector<M> MyMatrix<M, N>::operator*(MyVector<M>& other)
   auto ans = new std::vector<double>(M);
   #pragma omp parallel for
   for (size_t i = 0; i < M; ++i) {
-    //#pragma parallel for reduction(+:ans[i])
     for (size_t j = 0; j < N; ++j)
       (*ans)[i] += (*values_)[i * N + j] * other.get_values()[j];
   }
@@ -29,9 +28,11 @@ size_t MyMatrix<M, N>::max_width() const
     for (size_t j = 0; j < N; ++j) {
       std::ostringstream ostr;
       ostr << values_->at(i * N + j);
-      auto str = ostr.str();
-      if (ans < str.length())
-        ans = str.length();
+      auto str = ostr.str().length();
+      if (ans < str) {
+        #pragma omp atomic write
+        ans = str;
+      }
     }
   }
   return ans;

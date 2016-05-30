@@ -34,6 +34,7 @@ void perf_tests()
   t1 = high_resolution_clock::now();
   foo * bar;
   std::cout << "Test * on vectors took " << get_time(t1) << " us" << std::endl;
+  t1 = high_resolution_clock::now();
   mat * foo;
   std::cout << "Test * on vector and matrix took " << get_time(t1) << " us" << std::endl;
   omp_set_num_threads(1);
@@ -45,6 +46,7 @@ void perf_tests()
   t1 = high_resolution_clock::now();
   foo * bar;
   std::cout << "Test * on vectors took " << get_time(t1) << " us" << std::endl;
+  t1 = high_resolution_clock::now();
   mat * foo;
   std::cout << "Test * on vector and matrix took " << get_time(t1) << " us" << std::endl;
 }
