@@ -11,10 +11,11 @@ template <unsigned int M, unsigned int N>
 class MyMatrix {
   public:
     MyMatrix(std::vector<double>& values)
-    : values_(std::vector<double>(values))
+    : values_(&values)
+    , allocated_(false)
     { }
 
-    ~MyMatrix() = default;
+    ~MyMatrix();
 
     //MyMatrix operator*(MyMatrix& other);
 
@@ -24,12 +25,14 @@ class MyMatrix {
 
   private:
     MyMatrix()
-    : values_(std::vector<std::vector<double>>())
+    : values_(new std::vector<double>(M * N))
+    , allocated_(true)
     { }
 
     size_t max_width() const;
 
-    std::vector<double> values_;
+    bool allocated_;
+    std::vector<double>* values_;
 };
 
 #include "my_matrix.hxx"

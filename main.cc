@@ -25,6 +25,7 @@ void perf_tests()
   MyVector<LEN> foo = MyVector<LEN>(v1);
   MyVector<LEN> bar = MyVector<LEN>(v2);
   MyMatrix<LEN, LEN> mat = MyMatrix<LEN, LEN>(mt);
+  foo + bar;
   std::cout << "Test duration with " << omp_get_max_threads() << " thread(s)"
     << std::endl;
   high_resolution_clock::time_point t1 = high_resolution_clock::now();
@@ -48,7 +49,8 @@ void perf_tests()
   std::cout << "Test * on vector and matrix took " << get_time(t1) << " us" << std::endl;
 }
 
-void basic_tests() {
+void basic_tests()
+{
   std::cout << "Basic tests" << std::endl;
   std::vector<double> v1 { 0.5, 2, 0 };
   std::vector<double> v2 { 2, 0.5, -1 };
@@ -65,11 +67,16 @@ void basic_tests() {
   bar.print();
   auto matrix = MyMatrix<3, 3>(m);
   matrix.print();
-  (matrix * foo).print();
-  (matrix * bar).print();
+  auto tmp = matrix * foo;
+  tmp.print();
+  //(matrix * foo).print();
+  auto aux = matrix * bar;
+  aux.print();
+  //(matrix * bar).print();
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
   if (argc > 1 && std::string(argv[1]) == "-p")
     perf_tests();
   else

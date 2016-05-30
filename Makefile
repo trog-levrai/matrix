@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++14 -fopenmp -g
+CXXFLAGS=-std=c++14 -fopenmp -O3
 OUT=main
 SRC=main.cc
 
