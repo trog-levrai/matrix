@@ -5,7 +5,7 @@
 #include "my_vector.hh"
 #include "my_matrix.hh"
 
-#define LEN (1 << 26)
+#define LEN (1 << 14)
 
 using namespace std::chrono;
 
@@ -21,8 +21,10 @@ void perf_tests()
   std::cout << "Performance tests" << std::endl;
   auto v1 = std::vector<double>(LEN);
   auto v2 = std::vector<double>(LEN);
+  auto mt = std::vector<double>(LEN * LEN);
   MyVector<LEN> foo = MyVector<LEN>(v1);
   MyVector<LEN> bar = MyVector<LEN>(v2);
+  MyMatrix<LEN, LEN> mat = MyMatrix<LEN, LEN>(mt);
   std::cout << "Test duration with " << omp_get_max_threads() << " thread(s)"
     << std::endl;
   high_resolution_clock::time_point t1 = high_resolution_clock::now();
@@ -31,6 +33,8 @@ void perf_tests()
   t1 = high_resolution_clock::now();
   foo * bar;
   std::cout << "Test * on vectors took " << get_time(t1) << " us" << std::endl;
+  mat * foo;
+  std::cout << "Test * on vector and matrix took " << get_time(t1) << " us" << std::endl;
   omp_set_num_threads(1);
   std::cout << "Test duration with " << omp_get_max_threads() << " thread(s)"
     << std::endl;
@@ -40,6 +44,8 @@ void perf_tests()
   t1 = high_resolution_clock::now();
   foo * bar;
   std::cout << "Test * on vectors took " << get_time(t1) << " us" << std::endl;
+  mat * foo;
+  std::cout << "Test * on vector and matrix took " << get_time(t1) << " us" << std::endl;
 }
 
 void basic_tests() {
