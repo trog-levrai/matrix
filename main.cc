@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <omp.h>
 
 #include "my_vector.hh"
 #include "my_matrix.hh"
@@ -18,7 +19,15 @@ void perf_tests() {
   foo + bar;
   high_resolution_clock::time_point t2 = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>( t2 - t1 ).count();
-  std::cout << "Test duration: " << duration << " microseconds" << std::endl;
+  std::cout << "Test duration with " << omp_get_max_threads() << " thread(s): "
+    << duration << " microseconds" << std::endl;
+  omp_set_num_threads(1);
+  t1 = high_resolution_clock::now();
+  foo + bar;
+  t2 = high_resolution_clock::now();
+  duration = duration_cast<microseconds>( t2 - t1 ).count();
+  std::cout << "Test duration with " << omp_get_max_threads() << " thread(s): "
+    << duration << " microseconds" << std::endl;
 }
 
 void basic_tests() {
