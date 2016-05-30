@@ -9,25 +9,37 @@
 
 using namespace std::chrono;
 
-void perf_tests() {
+unsigned long get_time(high_resolution_clock::time_point t)
+{
+  high_resolution_clock::time_point t2 = high_resolution_clock::now();
+  auto duration = duration_cast<microseconds>( t2 - t ).count();
+  return duration;
+}
+
+void perf_tests()
+{
   std::cout << "Performance tests" << std::endl;
   auto v1 = std::vector<double>(LEN);
   auto v2 = std::vector<double>(LEN);
   MyVector<LEN> foo = MyVector<LEN>(v1);
   MyVector<LEN> bar = MyVector<LEN>(v2);
+  std::cout << "Test duration with " << omp_get_max_threads() << " thread(s)"
+    << std::endl;
   high_resolution_clock::time_point t1 = high_resolution_clock::now();
   foo + bar;
-  high_resolution_clock::time_point t2 = high_resolution_clock::now();
-  auto duration = duration_cast<microseconds>( t2 - t1 ).count();
-  std::cout << "Test duration with " << omp_get_max_threads() << " thread(s): "
-    << duration << " microseconds" << std::endl;
+  std::cout << "Test + on vectors took " << get_time(t1) << " us" << std::endl;
+  t1 = high_resolution_clock::now();
+  foo * bar;
+  std::cout << "Test * on vectors took " << get_time(t1) << " us" << std::endl;
   omp_set_num_threads(1);
+  std::cout << "Test duration with " << omp_get_max_threads() << " thread(s)"
+    << std::endl;
   t1 = high_resolution_clock::now();
   foo + bar;
-  t2 = high_resolution_clock::now();
-  duration = duration_cast<microseconds>( t2 - t1 ).count();
-  std::cout << "Test duration with " << omp_get_max_threads() << " thread(s): "
-    << duration << " microseconds" << std::endl;
+  std::cout << "Test + on vectors took " << get_time(t1) << " us" << std::endl;
+  t1 = high_resolution_clock::now();
+  foo * bar;
+  std::cout << "Test * on vectors took " << get_time(t1) << " us" << std::endl;
 }
 
 void basic_tests() {
