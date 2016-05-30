@@ -7,7 +7,7 @@ MyVector<M> MyMatrix<M, N>::operator*(MyVector<M>& other) {
   for (size_t i = 0; i < M; ++i) {
   //  #pragma parallel for reduction(+:ans[i])
     for (size_t j = 0; j < N; ++j)
-      ans[i] += values_[i][j] * other.get_values()[j];
+      ans[i] += values_[i * N + j] * other.get_values()[j];
   }
   return MyVector<M>(ans);
 }
@@ -19,7 +19,7 @@ size_t MyMatrix<M, N>::max_width() const {
   for (size_t i = 0; i < M; ++i) {
     for (size_t j = 0; j < N; ++j) {
       std::ostringstream ostr;
-      ostr << values_[i][j];
+      ostr << values_[i * N + j];
       auto str = ostr.str();
       if (ans < str.length())
         ans = str.length();
@@ -37,7 +37,7 @@ void MyMatrix<M, N>::print() const {
   for (size_t i = 0; i < M; ++i) {
     std::cout << "|";
     for (size_t j = 0; j < N; ++j)
-      std::cout << std::setw(size) << values_[i][j] << "|";
+      std::cout << std::setw(size) << values_[i * N + j] << "|";
     std::cout << std::endl;
   }
   for (size_t i = 0; i < 1 + N * (size + 1); ++i)

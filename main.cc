@@ -46,10 +46,11 @@ void basic_tests() {
   std::cout << "Basic tests" << std::endl;
   std::vector<double> v1 { 0.5, 2, 0 };
   std::vector<double> v2 { 2, 0.5, -1 };
-  auto m = std::vector<std::vector<double>>();
-  m.push_back(v1);
-  m.push_back(v2);
-  m.push_back(v2);
+  auto m = std::vector<double>(v1);
+  for (size_t i = 0; i < 3; ++i)
+    m.push_back(v2[i]);
+  for (size_t i = 0; i < 3; ++i)
+    m.push_back(v2[i]);
   MyVector<3> foo = MyVector<3>(v1);
   MyVector<3> bar = MyVector<3>(v2);
   (foo + bar).print();
