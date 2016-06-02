@@ -17,7 +17,7 @@ class MyMatrix {
 
     ~MyMatrix();
 
-    //MyMatrix operator*(MyMatrix& other);
+    MyMatrix<M, M> operator*(MyMatrix<N, M>& other);
 
     MyVector<M> operator*(MyVector<M>& other);
 
@@ -25,7 +25,7 @@ class MyMatrix {
 
   private:
     MyMatrix()
-    : values_(new std::vector<double>(M * N))
+    : values_(new std::vector<double>(M * N, 0))
     , allocated_(true)
     { }
 

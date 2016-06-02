@@ -19,6 +19,28 @@ MyVector<M> MyMatrix<M, N>::operator*(MyVector<M>& other)
   return *(new MyVector<M>(*ans, true));
 }
 
+static inline
+size_t get_pos(size_t i, size_t j, size_t M)
+{
+  return i + j * M;
+}
+
+template <unsigned int M, unsigned int N>
+MyMatrix<M, M> MyMatrix<M, N>::operator*(MyMatrix<N, M>& other)
+{
+  auto ans = MyMatrix<M, M>();
+  for (size_t i = 0; i < M; ++i)
+  {
+    #pragma omp parallel for
+    for (size_t j = 0; j < M; ++j)
+    {
+      for (size_t k = 0; k < N; ++k)
+        ans.values_[get_pos((i + j) % M, j, M)] += values_[get_pos(k, j, N)] * other.values_[get_pos(i, k, M)];
+    }
+  }
+  return ans;
+}
+
 template <unsigned int M, unsigned int N>
 size_t MyMatrix<M, N>::max_width() const
 {
