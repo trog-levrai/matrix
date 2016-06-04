@@ -35,7 +35,9 @@ MyMatrix<M, M> MyMatrix<M, N>::operator*(MyMatrix<N, M>& other)
     for (size_t j = 0; j < M; ++j)
     {
       for (size_t k = 0; k < N; ++k)
-        ans.values_[get_pos((i + j) % M, j, M)] += values_[get_pos(k, j, N)] * other.values_[get_pos(i, k, M)];
+        (*ans.values_)[get_pos((i + j) % M, j, M)] +=
+          (*values_)[get_pos(k, j, N)]
+          * (*other.values_)[get_pos((i + j) % M, k, M)];
     }
   }
   return ans;

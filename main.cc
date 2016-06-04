@@ -53,6 +53,7 @@ void perf_tests()
 
 void basic_tests()
 {
+  //omp_set_num_threads(1);
   std::cout << "Basic tests" << std::endl;
   std::vector<double> v1 { 0.5, 2, 0 };
   std::vector<double> v2 { 2, 0.5, -1 };
@@ -75,6 +76,8 @@ void basic_tests()
   auto aux = matrix * bar;
   aux.print();
   //(matrix * bar).print();
+  auto mat = matrix * matrix;
+  mat.print();
 }
 
 int main(int argc, char** argv)
