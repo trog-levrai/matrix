@@ -32,6 +32,18 @@ double MyVector<DIM>::operator*(MyVector& other)
 }
 
 template <unsigned int DIM>
+bool MyVector<DIM>::operator==(const MyVector& other) const
+{
+  for (unsigned int i = 0; i < DIM; ++i)
+  {
+    if ((*values_)[i] != (*other.values_)[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+template <unsigned int DIM>
 std::vector<double>& MyVector<DIM>::get_values()
 {
   return *values_;

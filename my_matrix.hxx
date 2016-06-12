@@ -44,6 +44,17 @@ MyMatrix<M, M> MyMatrix<M, N>::operator*(MyMatrix<N, M>& other)
 }
 
 template <unsigned int M, unsigned int N>
+bool MyMatrix<M, N>::operator==(const MyMatrix<N, M>& other) const
+{
+  for (size_t i = 0; i < M * N; ++i)
+  {
+    if (values_[i] != other.values_[i])
+      return false;
+  }
+  return true;
+}
+
+template <unsigned int M, unsigned int N>
 size_t MyMatrix<M, N>::max_width() const
 {
   size_t ans = 0;

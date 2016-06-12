@@ -16,8 +16,13 @@ class MyVector
     ~MyVector();
 
     MyVector operator+(MyVector& other);
+
     double operator*(MyVector& other);
+
+    bool operator==(const MyVector& other) const;
+
     std::vector<double>& get_values();
+
     void print() const;
 
   private:

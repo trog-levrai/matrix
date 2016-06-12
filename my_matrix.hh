@@ -19,6 +19,8 @@ class MyMatrix {
 
     MyMatrix<M, M> operator*(MyMatrix<N, M>& other);
 
+    bool operator==(const MyMatrix<N, M>& other) const;
+
     MyVector<M> operator*(MyVector<M>& other);
 
     void print() const;
