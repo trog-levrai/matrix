@@ -105,6 +105,11 @@ void basic_tests()
     m.push_back(v2[i]);
   for (size_t i = 0; i < 3; ++i)
     m.push_back(v2[i]);
+  auto m2 = std::vector<double>(v2);
+  for (size_t i = 0; i < 3; ++i)
+    m2.push_back(v1[i]);
+  for (size_t i = 0; i < 3; ++i)
+    m2.push_back(v2[i]);
   MyVector<3> foo = MyVector<3>(v1);
   MyVector<3> bar = MyVector<3>(v2);
   (foo + bar).print();
@@ -112,7 +117,9 @@ void basic_tests()
   foo.print();
   bar.print();
   auto matrix = MyMatrix<3, 3>(m);
+  auto matrix2 = MyMatrix<3, 3>(m2);
   matrix.print();
+  matrix2.print();
   auto tmp = matrix * foo;
   tmp.print();
   //(matrix * foo).print();
@@ -121,6 +128,8 @@ void basic_tests()
   //(matrix * bar).print();
   auto mat = matrix * matrix;
   mat.print();
+  auto mat2 = matrix * matrix2;
+  mat2.print();
 }
 
 int main(int argc, char** argv)
